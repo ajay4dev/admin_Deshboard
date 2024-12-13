@@ -1,50 +1,55 @@
-import { defineConfig } from 'vite';
-import react from '@vitejs/plugin-react';
-import path from 'node:path';
-import autoprefixer from 'autoprefixer';
+import { defineConfig } from 'vite'
+import react from '@vitejs/plugin-react'
+import path from 'node:path'
+import autoprefixer from 'autoprefixer'
 
 export default defineConfig(() => {
   return {
-    base: './', // Ensures relative paths for assets
+    base: './',
     build: {
-      outDir: 'build', // Output directory for production build
-      sourcemap: true, // Useful for debugging production issues
+      outDir: 'build',
     },
     css: {
       postcss: {
         plugins: [
-          autoprefixer(), // Handles vendor prefixes
+          autoprefixer({}), // add options if needed
         ],
       },
       preprocessorOptions: {
         scss: {
-          quietDeps: true, // Suppresses dependency warnings
+          quietDeps: true,
+          silenceDeprecations: ['import', 'legacy-js-api'],
         },
       },
     },
     esbuild: {
-      loader: 'jsx', // Transpiles JSX files
-      include: /src\/.*\.jsx?$/, // Matches JSX/JS files in the src directory
-      exclude: [], // No exclusions for now
+      loader: 'jsx',
+      include: /src\/.*\.jsx?$/,
+      exclude: [],
     },
     optimizeDeps: {
-      force: true, // Forces dependency optimization
+      force: true,
       esbuildOptions: {
         loader: {
-          '.js': 'jsx', // Ensures ESBuild treats .js as JSX
+          '.js': 'jsx',
         },
       },
     },
-    plugins: [react()], // Enables React fast refresh and JSX support
+    plugins: [react()],
     resolve: {
-      alias: {
-        'src/': `${path.resolve(__dirname, 'src')}/`, // Resolves absolute paths in the src directory
-      },
-      extensions: ['.mjs', '.js', '.ts', '.jsx', '.tsx', '.json', '.scss'], // Ensures these extensions are resolved
+      alias: [
+        {
+          find: 'src/',
+          replacement: `${path.resolve(__dirname, 'src')}/`,
+        },
+      ],
+      extensions: ['.mjs', '.js', '.ts', '.jsx', '.tsx', '.json', '.scss'],
     },
     server: {
-      port: 3000, // Development server port
-      proxy: {}, // Add proxy settings if needed
+      port: 3000,
+      proxy: {
+        // https://vitejs.dev/config/server-options.html
+      },
     },
-  };
-});
+  }
+})

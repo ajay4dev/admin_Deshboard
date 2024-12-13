@@ -9,7 +9,7 @@
   "license": "MIT",
   "author": "Ajay",
   "scripts": {
-    "build": "[my-framework] build --output public",
+    "build": "vite build",
     "lint": "eslint \"src/**/*.js\"",
     "serve": "vite preview",
     "start": "vite"
