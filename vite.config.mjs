@@ -7,7 +7,8 @@ export default defineConfig(() => {
   return {
     base: './',
     build: {
-      outDir: 'build',
+      manifest: true,
+      outDir: './dist',
     },
     css: {
       postcss: {
@@ -36,6 +37,7 @@ export default defineConfig(() => {
       },
     },
     plugins: [react()],
+    root: './src',
     resolve: {
       alias: [
         {
